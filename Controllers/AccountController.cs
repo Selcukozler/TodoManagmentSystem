@@ -32,7 +32,7 @@ namespace TodoManagementSystem.Controllers
         {
             if (ModelState.IsValid)
             {
-                // BURASI ÖNEMLİ: Artık yeni kayıt olan kişi bir ApplicationUser
+               
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await _userManager.CreateAsync(user, model.Password);
 
@@ -104,7 +104,7 @@ public async Task<IActionResult> Login(LoginViewModel model)
         [HttpPost]
         public async Task<IActionResult> UploadProfilePicture(IFormFile profilePicture)
         {
-            if (profilePicture != null && profilePicture.Length > 0)
+            if (profilePicture != null && profilePicture.Length > 0 && profilePicture.Length < 3 * 1024 * 1024) // 3MB boyut sınırı
             {
                 var user = await _userManager.GetUserAsync(User);
                 
